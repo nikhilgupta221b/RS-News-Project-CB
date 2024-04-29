@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
+</head>
+<body>
+    <h1>Recommendations based on: {{ article }}</h1>
+    <ul>
+        {% for title, similarity in recommendations %}
+            <li>{{ title }} (Similarity: {{ '%.3f' | format(similarity) if similarity is number else 'N/A' }})</li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <h2>Get more recommendations:</h2>
+    <form method="POST" action="/recommend" role="form">
+        <label for="article_title">Enter the title of an article you read or choose from above:</label><br>
+        <input type="text" id="article_title" name="article_title" aria-labelledby="article_title" list="article-list" autocomplete="off"><br><br>
+        <datalist id="article-list">
+            {% for title, similarity in recommendations %}
+                <option value="{{ title }}">{{ title }}</option>
+            {% endfor %}
+        </datalist>
+        <input type="submit" value="Recommend Similar Articles">
+    </form>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Content Based News RS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
+</head>
+<body>
+    <h1>News Recommendation System</h1>
+    <h2>Random News Articles:</h2>
+    <ul>
+        {% for article in random_articles %}
+            <li>{{ article }}</li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <form method="POST" action="/recommend" role="form">
+    <label for="article_title">Enter the title of an article you read or choose from above:</label><br>
+    <input type="text" id="article_title" name="article_title" aria-labelledby="article_title" list="article-list" autocomplete="off"><br><br>
+    <datalist id="article-list">
+        {% for article in random_articles %}
+            <option value="{{ article }}">{{ article }}</option>
+        {% endfor %}
+    </datalist>
+    <input type="submit" value="Recommend Similar Articles">
+</form>
+</body>
+</html>
